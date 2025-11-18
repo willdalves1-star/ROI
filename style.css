@@ -1,0 +1,128 @@
+/* Animações suaves */
+.card-animado {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-animado:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Modal suave */
+#modalCliente {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 50;
+}
+#modalCliente.show {
+  display: flex !important;
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Botões */
+.action-btn {
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-right: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.btn-edit {
+  background-color: #6366f1;
+  color: white;
+}
+.btn-edit:hover {
+  background-color: #4f46e5;
+}
+.btn-whatsapp {
+  background-color: #22c55e;
+  color: white;
+}
+.btn-whatsapp:hover {
+  background-color: #16a34a;
+}
+.btn-delete {
+  background-color: #ef4444;
+  color: white;
+}
+.btn-delete:hover {
+  background-color: #dc2626;
+}
+
+/* Tags de status e prioridade */
+.status-realizando {
+  background-color: #3b82f6;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.status-entregue {
+  background-color: #10b981;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.prioridade-alta {
+  background-color: #ef4444;
+  color: white;
+}
+.prioridade-média {
+  background-color: #f59e0b;
+  color: white;
+}
+.prioridade-baixa {
+  background-color: #3b82f6;
+  color: white;
+}
+
+/* Estilo da tabela para mobile */
+table {
+  overflow-x: auto;
+}
+td {
+  word-break: break-word;
+}
+@media (max-width: 640px) {
+  table thead {
+    display: none;
+  }
+  table tbody td {
+    display: block;
+    width: 100%;
+  }
+  table tbody tr {
+    display: block;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  table tbody td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  /* Cores de fundo pelo status */
+.bg-entregue {
+  background-color: #beffd1 !important;
+}
+.bg-realizando {
+  background-color: #fee2e2 !important;
+}
+
+/* Cores de borda esquerda por prioridade */
+.borda-alta {
+  border-left-color: #dc2626 !important;
+}
+.borda-media {
+  border-left-color: #f59e0b !important;
+}
+.borda-baixa {
+  border-left-color: #3b82f6 !important;
+}
