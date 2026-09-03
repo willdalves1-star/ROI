@@ -1,127 +1,107 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WA CRM - Azul Moderno</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#07111f" />
+  <title>Meta Ads | Lucro &amp; Prejuízo</title>
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
+    :root { --bg:#07111f; --panel:#0d1a2b; --panel2:#101f33; --line:#24364c; --ink:#eef5ff; --muted:#9dafc7; --blue:#4f8cff; --cyan:#47d9e8; --green:#41d392; --red:#ff6f7c; --amber:#ffbf5b; --radius:16px; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-width:320px; font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color:var(--ink); background:radial-gradient(circle at 80% -20%,#173f63 0,transparent 30rem),var(--bg); }
+    button, input, select { font:inherit; }
+    .app { max-width:1440px; margin:auto; padding:32px clamp(16px,3vw,48px) 48px; }
+    header { display:flex; align-items:flex-start; justify-content:space-between; gap:24px; margin-bottom:28px; }
+    .eyebrow { color:var(--cyan); font-size:.76rem; font-weight:800; letter-spacing:.13em; text-transform:uppercase; margin:0 0 7px; }
+    h1 { font-size:clamp(1.7rem,3vw,2.55rem); line-height:1.08; letter-spacing:-.045em; margin:0; }
+    .subtitle { max-width:650px; color:var(--muted); margin:11px 0 0; line-height:1.5; }
+    .actions { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:9px; }
+    button { cursor:pointer; border:0; border-radius:10px; padding:10px 14px; font-weight:700; color:var(--ink); transition:transform .15s,background .15s,border-color .15s; }
+    button:hover { transform:translateY(-1px); }
+    .primary { background:linear-gradient(135deg,var(--blue),#7667ff); box-shadow:0 8px 24px #397dff30; }
+    .secondary { background:#182a42; border:1px solid #314660; }
+    .danger { color:#ffabb2; background:#301824; border:1px solid #68313e; }
+    .toolbar { padding:14px; display:flex; justify-content:space-between; gap:15px; flex-wrap:wrap; align-items:center; background:#0b1828cc; border:1px solid var(--line); border-radius:var(--radius); margin-bottom:20px; }
+    .period { display:flex; align-items:center; gap:9px; color:var(--muted); font-size:.9rem; }
+    select { appearance:none; color:var(--ink); background:#14243a; border:1px solid #36506e; padding:9px 34px 9px 11px; border-radius:9px; outline:none; }
+    .status { font-size:.82rem; color:var(--muted); }
+    .status b { color:var(--green); }
+    .metrics { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin-bottom:20px; }
+    .card { background:linear-gradient(145deg,#10223a,#0d1a2c); border:1px solid var(--line); border-radius:var(--radius); padding:17px; min-width:0; }
+    .card-label { display:flex; align-items:center; justify-content:space-between; color:var(--muted); font-size:.8rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; }
+    .dot { width:8px; height:8px; border-radius:50%; background:var(--blue); }
+    .card:nth-child(2) .dot { background:var(--cyan); }.card:nth-child(3) .dot { background:var(--green); }.card:nth-child(4) .dot { background:var(--amber); }
+    .value { font-size:clamp(1.3rem,2.4vw,1.85rem); font-weight:800; letter-spacing:-.04em; margin:11px 0 4px; overflow-wrap:anywhere; }
+    .hint { color:var(--muted); font-size:.8rem; }.positive { color:var(--green) !important; }.negative { color:var(--red) !important; }.neutral { color:var(--ink) !important; }
+    .details { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-bottom:25px; }
+    .mini { padding:13px 15px; border-radius:12px; background:#0b1828; border:1px solid var(--line); }.mini span { display:block; color:var(--muted); font-size:.77rem; }.mini strong { display:block; margin-top:4px; font-size:1rem; }
+    .table-card { overflow:hidden; background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); }
+    .table-heading { display:flex; align-items:center; justify-content:space-between; gap:15px; padding:18px 20px; border-bottom:1px solid var(--line); }.table-heading h2 { font-size:1.05rem; margin:0; }.table-heading p { color:var(--muted); font-size:.82rem; margin:4px 0 0; }
+    .table-wrap { overflow-x:auto; }.table-wrap::-webkit-scrollbar{height:10px}.table-wrap::-webkit-scrollbar-thumb{background:#324862;border-radius:10px}
+    table { width:100%; min-width:1280px; border-collapse:collapse; }
+    th { text-align:left; white-space:nowrap; padding:12px 10px; color:var(--muted); background:#0a1727; font-size:.7rem; text-transform:uppercase; letter-spacing:.055em; }
+    td { padding:9px 7px; border-top:1px solid #203247; vertical-align:middle; }
+    td:first-child,th:first-child { padding-left:18px; } td:last-child,th:last-child { padding-right:18px; }
+    .field { width:100%; min-width:94px; color:var(--ink); background:#122137; border:1px solid transparent; outline:0; border-radius:7px; padding:8px 7px; transition:border .15s,background .15s; }
+    .field:hover,.field:focus { border-color:#3d5e80; background:#172c46; }.date { min-width:135px; }.notes { min-width:150px; }.number { text-align:right; }.result { min-width:108px; text-align:right; font-weight:800; white-space:nowrap; font-size:.88rem; }.ratio { min-width:78px; text-align:center; font-weight:700; white-space:nowrap; font-size:.84rem; }
+    .row-actions { display:flex; gap:3px; }.duplicate,.delete { padding:8px 10px; border-radius:7px; background:transparent; }.duplicate { color:#a9c7ff; }.duplicate:hover { background:#172d4a; }.delete { color:#ff9ba5; }.delete:hover { background:#3b1d28; }
+    .empty { padding:42px 20px; color:var(--muted); text-align:center; }.empty b { display:block; color:var(--ink); font-size:1rem; margin-bottom:5px; }
+    .footer-note { margin:16px 0 0; color:#8295af; font-size:.78rem; line-height:1.5; }.footer-note kbd { color:var(--ink); border:1px solid #38516c; border-radius:4px; padding:1px 5px; }
+    .toast { position:fixed; z-index:5; left:50%; bottom:23px; transform:translate(-50%,140px); opacity:0; transition:all .25s ease; background:#d9f8e8; color:#083622; padding:11px 16px; border-radius:9px; box-shadow:0 10px 35px #0008; font-size:.88rem; font-weight:700; }.toast.show { opacity:1; transform:translate(-50%,0); }
+    @media(max-width:960px) { header { flex-direction:column; }.actions{justify-content:flex-start}.metrics{grid-template-columns:repeat(2,minmax(0,1fr));}.details{grid-template-columns:repeat(2,minmax(0,1fr));} }
+    @media(max-width:520px) { .app{padding:24px 13px 36px}.metrics,.details{grid-template-columns:1fr 1fr;gap:9px}.card{padding:13px}.value{font-size:1.2rem}.toolbar{align-items:stretch}.period{justify-content:space-between}.actions button{flex:1}.table-heading{padding:15px} }
   </style>
 </head>
-<body class="bg-blue-50 text-gray-800">
-    <div id="layoutContainer" class="flex flex-col lg:flex-row min-h-screen">
-    <!-- Sidebar -->
-    <aside class="lg:block w-full lg:w-72 bg-blue-800 text-white p-6 flex flex-col shadow-lg">
-      <h1 class="text-3xl font-bold mb-4">WA CRM</h1>
-      <p class="text-sm opacity-80">Total de Serviços</p>
-      <p id="totalValor" class="text-4xl font-extrabold mb-6">R$ 0,00</p>
-
-
-      <button id="addClienteBtn" class="bg-white text-blue-800 px-4 py-3 rounded-xl font-semibold shadow hover:bg-blue-100 transition mb-2">+ Novo Cliente</button>
-      <button id="exportarBtn" class="bg-white text-blue-800 px-4 py-3 rounded-xl font-semibold shadow hover:bg-blue-100 transition mb-2">⬇️ Exportar</button>
-      <label for="importarInput">
-        <div class="bg-white text-blue-800 px-4 py-3 rounded-xl font-semibold shadow text-center cursor-pointer hover:bg-blue-100 transition">
-          ⬆️ Importar
-        </div>
-        <input type="file" id="importarInput" accept=".json" class="hidden" />
-      </label>
-    </aside>
-
-    <!-- Conteúdo principal -->
-    <main class="flex-1 p-4 sm:p-6 overflow-x-hidden">
-      <!-- Dashboard Resumo -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-        <div class="bg-white border-l-4 border-blue-500 p-4 rounded-lg shadow">
-          <h3 class="text-sm text-gray-500">Total Realizando</h3>
-          <p id="totalRealizando" class="text-2xl font-bold text-blue-700">0</p>
-        </div>
-        <div class="bg-white border-l-4 border-green-500 p-4 rounded-lg shadow">
-          <h3 class="text-sm text-gray-500">Total Entregue</h3>
-          <p id="totalEntregue" class="text-2xl font-bold text-green-700">0</p>
-        </div>
-        <div class="bg-white border-l-4 border-gray-500 p-4 rounded-lg shadow">
-          <h3 class="text-sm text-gray-500">Total de Clientes</h3>
-          <p id="totalClientes" class="text-2xl font-bold text-gray-800">0</p>
-        </div>
-      </div>
-
-      <!-- Barra de ações -->
-      <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
-        <div class="flex items-center gap-2 w-full sm:w-auto">
-          <input type="text" id="buscarCliente" placeholder="🔍 Buscar clientes..." class="p-2 pl-10 border rounded-lg w-full sm:w-64 bg-white shadow-sm focus:ring-2 focus:ring-blue-300" />
-        </div>
-        <div class="flex flex-wrap gap-2">
-        </div>
-      </div>
-
-            <!-- Lista de filtros e botões -->
-      <div class="flex flex-col md:flex-row md:items-center md:gap-4 gap-3 mb-6">
-     
-        <select id="filtroStatus" class="p-3 border rounded-lg w-full md:w-auto">
-          <option value="">Situação</option>
-          <option value="realizando">Realizando</option>
-          <option value="entregue">Entregue</option>
-        </select>
-        <select id="filtroServico" class="p-3 border rounded-lg w-full md:w-auto">
-          <option value="">Serviço</option>
-          <option value="logotipo">Logotipo</option>
-          <option value="site">Site</option>
-          <option value="anuncio">Anúncio</option>
-        </select>
-        <select id="filtroPrioridade" class="p-3 border rounded-lg w-full md:w-auto">
-          <option value="">Prioridade</option>
-          <option value="baixa">Baixa</option>
-          <option value="média">Média</option>
-          <option value="alta">Alta</option>
-        </select>
-      </div>
-
-      <!-- Cards -->
-      <div id="listaClientes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-    </main>
-  </div>
-
-  <!-- Modal -->
-  <div id="modalCliente" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-    <div class="bg-white p-6 sm:p-8 rounded-xl shadow-2xl w-full max-w-2xl">
-      <h2 class="text-2xl font-bold mb-6 text-blue-800">Adicionar / Editar Cliente</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <input id="nomeCliente" class="border p-3 rounded-lg w-full" type="text" placeholder="Nome">
-        <input id="empresaCliente" class="border p-3 rounded-lg w-full" type="text" placeholder="Empresa">
-        <input id="contatoCliente" class="border p-3 rounded-lg w-full" type="text" placeholder="WhatsApp ou Email">
-        <input id="valorCliente" class="border p-3 rounded-lg w-full" type="number" placeholder="Valor R$">
-
-        <select id="tipoServico" class="border p-3 rounded-lg w-full">
-          <option value="">Tipo de Serviço</option>
-          <option value="logotipo">Logotipo</option>
-          <option value="site">Site</option>
-          <option value="anuncio">Anúncio</option>
-        </select>
-        <select id="prioridadeCliente" class="border p-3 rounded-lg w-full">
-          <option value="baixa">Baixa</option>
-          <option value="média">Média</option>
-          <option value="alta">Alta</option>
-        </select>
-        <select id="statusCliente" class="border p-3 rounded-lg w-full">
-          <option value="realizando">Realizando</option>
-          <option value="entregue">Entregue</option>
-        </select>
-        <input id="dataCriacao" class="border p-3 rounded-lg w-full" type="date">
-        <textarea id="obsCliente" class="border p-3 rounded-lg w-full md:col-span-2" placeholder="Observações"></textarea>
-      </div>
-      <div class="flex flex-col sm:flex-row justify-end gap-3 mt-6">
-        <button id="cancelarBtn" class="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500">Cancelar</button>
-        <button id="salvarClienteBtn" class="bg-blue-700 text-white px-6 py-2 rounded-lg hover:bg-blue-800">Salvar</button>
-      </div>
-    </div>
-  </div>
-
-  <script type="module" src="script.js"></script>
-  
+<body>
+  <main class="app">
+    <header>
+      <div><p class="eyebrow">Gestão de campanhas</p><h1>Calculadora de Lucro<br>Meta Ads</h1><p class="subtitle">Registre seus resultados diários, acompanhe o retorno dos anúncios e descubra rapidamente se a operação está lucrando.</p></div>
+      <div class="actions"><button class="secondary" id="exportBtn">↓ Exportar backup</button><button class="secondary" id="importBtn">↑ Importar backup</button><input id="importFile" type="file" accept="application/json,.json" hidden><button class="primary" id="addBtn">+ Adicionar dia</button></div>
+    </header>
+    <section class="toolbar"><div class="period"><span>Visualizar:</span><select id="monthFilter"><option value="all">Todos os períodos</option></select></div><div class="status" id="status">Dados salvos <b>automaticamente</b> neste navegador.</div></section>
+    <section class="metrics">
+      <article class="card"><div class="card-label">Valor investido <i class="dot"></i></div><div class="value" id="totalSpend">R$ 0,00</div><div class="hint">em anúncios Meta</div></article>
+      <article class="card"><div class="card-label">Faturamento <i class="dot"></i></div><div class="value" id="totalRevenue">R$ 0,00</div><div class="hint">vendas realizadas</div></article>
+      <article class="card"><div class="card-label">Lucro / Prejuízo <i class="dot"></i></div><div class="value" id="totalProfit">R$ 0,00</div><div class="hint" id="profitHint">considerando todos os custos</div></article>
+      <article class="card"><div class="card-label">ROAS médio <i class="dot"></i></div><div class="value" id="totalRoas">—</div><div class="hint">faturamento ÷ investimento</div></article>
+    </section>
+    <section class="details">
+      <div class="mini"><span>Vendas</span><strong id="totalSales">0</strong></div><div class="mini"><span>Leads obtidos</span><strong id="totalLeads">0</strong></div><div class="mini"><span>Custo por lead (CPL)</span><strong id="totalCpl">—</strong></div><div class="mini"><span>Custo por venda (CPA)</span><strong id="totalCpa">—</strong></div>
+    </section>
+    <section class="table-card"><div class="table-heading"><div><h2>Lançamentos diários</h2><p>Edite qualquer campo. Os indicadores e totais são atualizados na hora.</p></div><button class="primary" id="addBtnTop">+ Novo lançamento</button></div><div class="table-wrap"><table><thead><tr><th>Data</th><th>Investido (R$)</th><th>Faturamento (R$)</th><th>Vendas</th><th>Leads</th><th>Outros custos (R$)</th><th>Lucro / Prejuízo</th><th>ROAS</th><th>CPL</th><th>Anotações</th><th></th></tr></thead><tbody id="rows"></tbody></table><div class="empty" id="empty" hidden><b>Nenhum lançamento neste período.</b>Adicione um dia ou selecione outro período no filtro.</div></div></section>
+    <p class="footer-note">Fórmula: <b>Lucro = Faturamento − Investimento em anúncios − Outros custos.</b> Para segurança, faça backups regulares com <kbd>Exportar backup</kbd>. Seus dados ficam salvos apenas neste navegador até você exportá-los.</p>
+  </main><div class="toast" id="toast" role="status"></div>
+  <script>
+    (() => {
+      const KEY = 'metaAdsProfitCalculator.v1';
+      const $ = id => document.getElementById(id);
+      const money = new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'});
+      let data = load(); let activeFilter = 'all'; let toastTimer;
+      function today(){ return new Date().toISOString().slice(0,10); }
+      function initialRow(){ return {id:crypto.randomUUID(), date:'2026-01-01', spend:0, revenue:0, sales:0, leads:0, otherCosts:0, notes:''}; }
+      function load(){ try { const saved=JSON.parse(localStorage.getItem(KEY)); return Array.isArray(saved) ? saved : [initialRow()]; } catch { return [initialRow()]; } }
+      function save(){ localStorage.setItem(KEY,JSON.stringify(data)); $('status').innerHTML='Dados salvos <b>automaticamente</b> neste navegador.'; }
+      function number(v){ const n=Number(v); return Number.isFinite(n) && n>=0 ? n : 0; }
+      function fmt(v){ return money.format(v||0); }
+      function ratio(v,suffix='x'){ return Number.isFinite(v) ? v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+suffix : '—'; }
+      function showToast(message){ clearTimeout(toastTimer); const el=$('toast'); el.textContent=message; el.classList.add('show'); toastTimer=setTimeout(()=>el.classList.remove('show'),2800); }
+      function filtered(){ return activeFilter==='all' ? data : data.filter(x=>x.date.startsWith(activeFilter)); }
+      function input(type,key,value,extra=''){ return `<input class="field ${extra}" data-key="${key}" type="${type}" ${type==='number'?'min="0" step="0.01"':''} value="${escapeAttr(value)}">`; }
+      function escapeAttr(v){ return String(v??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+      function profitClass(v){ return v>0?'positive':v<0?'negative':'neutral'; }
+      function renderRows(){ const items=filtered().sort((a,b)=>b.date.localeCompare(a.date)); const body=$('rows'); body.innerHTML=items.map(row=>{ const cost=number(row.spend)+number(row.otherCosts), profit=number(row.revenue)-cost, roas=number(row.spend)>0?number(row.revenue)/number(row.spend):NaN, cpl=number(row.leads)>0?cost/number(row.leads):NaN; return `<tr data-id="${row.id}"><td>${input('date','date',row.date,'date')}</td><td>${input('number','spend',number(row.spend),'number')}</td><td>${input('number','revenue',number(row.revenue),'number')}</td><td>${input('number','sales',number(row.sales),'number')}</td><td>${input('number','leads',number(row.leads),'number')}</td><td>${input('number','otherCosts',number(row.otherCosts),'number')}</td><td class="result ${profitClass(profit)}">${fmt(profit)}</td><td class="ratio">${ratio(roas)}</td><td class="ratio">${Number.isFinite(cpl)?fmt(cpl):'—'}</td><td>${input('text','notes',row.notes,'notes')}</td><td><div class="row-actions"><button class="duplicate" title="Duplicar dia" aria-label="Duplicar dia">⧉</button><button class="delete" title="Excluir lançamento" aria-label="Excluir lançamento">✕</button></div></td></tr>`; }).join(''); $('empty').hidden=items.length>0; }
+      function renderMetrics(){ const rows=filtered(); const total=rows.reduce((a,r)=>{a.spend+=number(r.spend);a.revenue+=number(r.revenue);a.sales+=number(r.sales);a.leads+=number(r.leads);a.other+=number(r.otherCosts);return a;},{spend:0,revenue:0,sales:0,leads:0,other:0}); const profit=total.revenue-total.spend-total.other, acquisition=total.spend+total.other; $('totalSpend').textContent=fmt(total.spend);$('totalRevenue').textContent=fmt(total.revenue);const p=$('totalProfit');p.textContent=fmt(profit);p.className='value '+profitClass(profit);$('profitHint').textContent=profit>0?'resultado positivo no período':profit<0?'atenção: resultado negativo':'considerando todos os custos';$('totalRoas').textContent=ratio(total.spend>0?total.revenue/total.spend:NaN);$('totalSales').textContent=total.sales.toLocaleString('pt-BR');$('totalLeads').textContent=total.leads.toLocaleString('pt-BR');$('totalCpl').textContent=total.leads?fmt(acquisition/total.leads):'—';$('totalCpa').textContent=total.sales?fmt(acquisition/total.sales):'—'; }
+      function rebuildFilter(){ const select=$('monthFilter'); const months=[...new Set(data.map(x=>x.date?.slice(0,7)).filter(Boolean))].sort().reverse(); select.innerHTML='<option value="all">Todos os períodos</option>'+months.map(m=>{ const [year,month]=m.split('-'); const name=new Date(year,Number(month)-1,1).toLocaleDateString('pt-BR',{month:'long',year:'numeric'}); return `<option value="${m}">${name[0].toUpperCase()+name.slice(1)}</option>`; }).join(''); if(!months.includes(activeFilter))activeFilter='all';select.value=activeFilter; }
+      function render(){ rebuildFilter();renderRows();renderMetrics(); }
+      function addRow(){ const row={id:crypto.randomUUID(),date:today(),spend:0,revenue:0,sales:0,leads:0,otherCosts:0,notes:''};data.push(row);activeFilter='all';save();render();requestAnimationFrame(()=>document.querySelector(`tr[data-id="${row.id}"] input`)?.focus()); }
+      $('rows').addEventListener('input',e=>{ const el=e.target;if(!el.matches('[data-key]'))return;const row=data.find(x=>x.id===el.closest('tr').dataset.id);if(!row)return; row[el.dataset.key]=el.type==='number'?number(el.value):el.value;save();renderMetrics();const tr=el.closest('tr');const r=row,cost=number(r.spend)+number(r.otherCosts),profit=number(r.revenue)-cost;tr.querySelector('.result').textContent=fmt(profit);tr.querySelector('.result').className='result '+profitClass(profit);tr.querySelectorAll('.ratio')[0].textContent=ratio(number(r.spend)>0?number(r.revenue)/number(r.spend):NaN);tr.querySelectorAll('.ratio')[1].textContent=number(r.leads)>0?fmt(cost/number(r.leads)):'—'; });
+      $('rows').addEventListener('change',e=>{ if(e.target.dataset.key==='date'){save();render();} });
+      $('rows').addEventListener('click',e=>{const rowElement=e.target.closest('tr');if(!rowElement)return;const id=rowElement.dataset.id;if(e.target.closest('.duplicate')){const source=data.find(x=>x.id===id);if(!source)return;data.push({...source,id:crypto.randomUUID()});save();render();showToast('Dia duplicado com sucesso.');return;}const btn=e.target.closest('.delete');if(!btn)return;if(confirm('Excluir este lançamento?')){data=data.filter(x=>x.id!==id);save();render();showToast('Lançamento excluído.');}});
+      $('addBtn').onclick=addRow;$('addBtnTop').onclick=addRow;$('monthFilter').onchange=e=>{activeFilter=e.target.value;renderRows();renderMetrics();};
+      $('exportBtn').onclick=()=>{ const backup={app:'Calculadora Meta Ads',version:1,exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`backup-meta-ads-${today()}.json`;a.click();URL.revokeObjectURL(a.href);showToast('Backup exportado com sucesso.'); };
+      $('importBtn').onclick=()=>$('importFile').click();$('importFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;try{const parsed=JSON.parse(await file.text());const incoming=Array.isArray(parsed)?parsed:parsed.data;if(!Array.isArray(incoming))throw new Error();if(!confirm(`Importar ${incoming.length} lançamento(s)? Isso substituirá os dados atuais.`))return;data=incoming.map(r=>({id:r.id||crypto.randomUUID(),date:r.date||today(),spend:number(r.spend),revenue:number(r.revenue),sales:number(r.sales),leads:number(r.leads),otherCosts:number(r.otherCosts),notes:String(r.notes||'')}));save();activeFilter='all';render();showToast('Backup importado com sucesso.');}catch{alert('Não foi possível ler este arquivo. Escolha um backup JSON exportado pela calculadora.');}finally{e.target.value='';}};
+      document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='n'){e.preventDefault();addRow();}});render();
+    })();
+  </script>
 </body>
 </html>
